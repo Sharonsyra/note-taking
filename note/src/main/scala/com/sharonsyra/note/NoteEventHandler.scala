@@ -1,10 +1,10 @@
-package com.note
+package com.sharonsyra.note
 
 import java.time.Instant
 
 import akka.actor.ActorSystem
-import com.namely.protobuf.account.common.Note
-import com.namely.protobuf.account.events.NoteCreated
+import com.sharonsyra.protobuf.note.events._
+import com.sharonsyra.protobuf.note.common._
 import io.superflat.lagompb.EventHandler
 import io.superflat.lagompb.protobuf.core.MetaData
 import scalapb.GeneratedMessage
@@ -22,7 +22,7 @@ class NoteEventHandler(actorSystem: ActorSystem) extends EventHandler[Note](acto
 
   private def handleNoteCreated(event: NoteCreated, state: Note): Note =
     state.update(
-      _.noteId := event.noteId,
+      _.noteUuid := event.noteUuid,
       _.noteTitle := event.noteTitle,
       _.noteContent := event.noteContent,
       _.createdAt := instantToTimestamp(Instant.now()),

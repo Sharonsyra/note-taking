@@ -1,20 +1,20 @@
-package com.note
+package com.sharonsyra.note
 
 import akka.actor.ActorSystem
 import com.google.protobuf.any.Any
-import com.namely.protobuf.account.commands.{CreateNote, GetNote}
-import com.namely.protobuf.account.common.Note
-import com.namely.protobuf.account.events.NoteCreated
+import com.sharonsyra.protobuf.note.commands._
+import com.sharonsyra.protobuf.note.common._
+import com.sharonsyra.protobuf.note.events.NoteCreated
 import io.superflat.lagompb.protobuf.core._
 import io.superflat.lagompb.{Command, CommandHandler}
 
 import scala.util.{Failure, Success, Try}
 
 class NoteCommandHandler(actorSystem: ActorSystem) extends CommandHandler[Note](actorSystem) {
-  override def handle(command: Command, currentState: Note, currentMetaData: MetaData): Try[CommandHandlerResponse] = {
+  override def handle(command: Command, state: Note, currentMetaData: MetaData): Try[CommandHandlerResponse] = {
     command.command match {
-      case command: CreateNote => Try(handleCreateNote(command, currentState))
-      case command: GetNote => Try(handleGetNote(command, currentState))
+      case command: CreateNote => Try(handleCreateNote(command, state))
+      case command: GetNote => Try(handleGetNote(command, state))
     }
   }
 
@@ -28,7 +28,7 @@ class NoteCommandHandler(actorSystem: ActorSystem) extends CommandHandler[Note](
               .withEvent(
                 Any.pack(
                   NoteCreated()
-                      .withNoteId(command.noteId)
+                      .withNoteUuid(command.noteUuid)
                       .withNoteTitle(command.noteTitle)
                       .withNoteContent(command.noteContent)
                 )
@@ -45,7 +45,7 @@ class NoteCommandHandler(actorSystem: ActorSystem) extends CommandHandler[Note](
   }
 
   private def handleGetNote(command: GetNote, state: Note): CommandHandlerResponse = {
-    Try(require(state.noteId.equals(command.noteId), s"invalid note id ${command.noteId} sent")) match {
+    Try(require(state.noteUuid.equals(command.noteUuid), s"invalid note id ${command.noteUuid} sent")) match {
       case Success(_) =>
         CommandHandlerResponse()
           .withSuccessResponse(
@@ -63,12 +63,3 @@ class NoteCommandHandler(actorSystem: ActorSystem) extends CommandHandler[Note](
   }
 
 }
-//message ChangeNote {
-//  int32 note_id = 1;
-//  string note_title = 2;
-//  string note_content = 3;
-//}
-//
-//message DeleteNote {
-//  int32 note_id = 1;
-//}

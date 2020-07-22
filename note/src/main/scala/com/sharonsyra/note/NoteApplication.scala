@@ -1,10 +1,11 @@
-package com.note
+package com.sharonsyra.note
 
 import com.lightbend.lagom.scaladsl.akka.discovery.AkkaDiscoveryComponents
 import com.lightbend.lagom.scaladsl.api.Descriptor
 import com.lightbend.lagom.scaladsl.devmode.LagomDevModeComponents
 import com.lightbend.lagom.scaladsl.server.{LagomApplication, LagomApplicationContext, LagomApplicationLoader, LagomServer}
-import com.namely.protobuf.account.common.Note
+import com.sharonsyra.note.api.NoteService
+import com.sharonsyra.protobuf.note.common.Note
 import com.softwaremill.macwire._
 import io.superflat.lagompb.{AggregateRoot, BaseApplication, CommandHandler, EventHandler}
 

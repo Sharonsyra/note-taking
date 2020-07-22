@@ -1,7 +1,7 @@
-package com.note
+package com.sharonsyra.note
 
 import akka.actor.ActorSystem
-import com.namely.protobuf.account.common.Note
+import com.sharonsyra.protobuf.note.common.Note
 import io.superflat.lagompb.{AggregateRoot, CommandHandler, EventHandler}
 import scalapb.GeneratedMessageCompanion
 

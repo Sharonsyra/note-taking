@@ -1,23 +1,23 @@
 syntax = "proto3";
 
-package com.namely.protobuf.account;
+package com.sharonsyra.protobuf.note;
 
 message CreateNote {
-    string note_id = 1;
+    string note_uuid = 1;
     string note_title = 2;
     string note_content = 3;
 }
 
 message GetNote {
-    string note_id = 1;
+    string note_uuid = 1;
 }
 
 message ChangeNote {
-    string note_id = 1;
+    string note_uuid = 1;
     string note_title = 2;
     string note_content = 3;
 }
 
 message DeleteNote {
-    string note_id = 1;
+    string note_uuid = 1;
 }

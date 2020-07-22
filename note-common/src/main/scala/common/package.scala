@@ -1,6 +1,6 @@
 import java.time.Instant
 
-import com.namely.protobuf.account.common.Timestamp
+import com.sharonsyra.protobuf.note.common.Timestamp
 
 package object common {
 

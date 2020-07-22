@@ -1,0 +1,48 @@
+version: "3.6"
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - ./db/migrations:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Passmefast}
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+    ports:
+      - 5050:80
+
+  note:
+    image: note:development<localBuild>
+    hostname: "note"
+    depends_on:
+      - postgres
+    ports:
+      - 9000:9000
+      - 9102:9102
+      - 9095:9095
+      - 5266:5266
+    environment:
+      HTTP_ADDRESS: "0.0.0.0"
+      HTTP_PORT: 9000
+      TRACE_HOST: tracer
+      TRACE_PORT: 14268
+      SERVICE_NAME: "note-service"
+      REQUIRED_CONTACT_POINT_NR: 1
+      EVENTS_BATCH_THRESHOLD: 2
+      NUM_SNAPSHOTS_TO_RETAIN: 2
+      EVENTS_TAG_NAME: "note-service"
+      PROTO_PACKAGE: "com.sharonsyra.protobuf.note"
+      PERSISTENCE_DB_HOST: postgres
+      PERSISTENCE_DB_PORT: 5432
+      PERSISTENCE_DB_USER: postgres
+      PERSISTENCE_DB_PASSWORD: Passmefast
+      PERSISTENCE_DB_NAME: postgres

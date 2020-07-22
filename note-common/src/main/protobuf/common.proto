@@ -1,9 +1,9 @@
 syntax = "proto3";
 
-package com.namely.protobuf.account;
+package com.sharonsyra.protobuf.note;
 
 message Note {
-    string note_id = 1;
+    string note_uuid = 1;
     string note_title = 2;
     string note_content = 3;
     Timestamp created_at = 4;
@@ -18,101 +18,3 @@ message Timestamp {
   int64 seconds = 1;
   int32 nanos = 2;
 }
-
-//message Empty {}
-//
-//message Any {
-//    string type_url = 1;
-//
-//    bytes value = 2;
-//}
-//
-//// Successful command handler result.
-//message SuccessResult {
-//    oneof result {
-//        // this helps push the current state without persisting
-//        // an event
-//        Empty no_event = 1;
-//        // the actual event that needs to be persisted
-//        Any event = 2;
-//    }
-//}
-//
-//enum FailureCause {
-//    VALIDATION_ERROR = 0;
-//    INTERNAL_ERROR = 1;
-//    NOT_FOUND = 2;
-//    FORBIDDEN = 3;
-//}
-//
-//// Meta data for the journal
-//message EventMeta {
-//    // the revision number for the entity, increases sequentially
-//    int64 revision_number = 1;
-//    // the time the state has been modified
-//    Timestamp revision_date = 2;
-//    // use to store additional data shared by a plugin.
-//    // the format of the key/value entry is as follow: <plugin_id>|key:value
-//    // the plugin_id must be unique and in ascii character
-//    map<string, string> plugin_data = 3;
-//}
-//
-//// StateWrapper wraps state and its meta data
-//// // Note: Internal to lagom-common
-//message StateWrapper {
-//    // the entity state
-//    Any state = 1;
-//    // metadata from the event that made this state
-//    EventMeta meta = 2;
-//}
-//
-//// EventWrapper is an event wrapper that holds both the
-//// event and the corresponding aggregate root state.
-//// // Note: Internal to lagom-common
-//message EventWrapper {
-//    // the event emitted
-//    Any event = 1;
-//    // the state obtained from processing the event
-//    Any resulting_state = 2;
-//    // event meta data
-//    EventMeta meta = 3;
-//}
-//
-//// Failed command handler result.
-//message FailedResult {
-//    // command handler failed reason
-//    string reason = 1;
-//    // cause of the failure
-//    FailureCause cause = 2;
-//}
-//
-//// Response sent by a command handler.
-//message CommandHandlerResult {
-//    oneof handler_result {
-//        SuccessResult success_result = 1;
-//        FailedResult failed_result = 2;
-//    }
-//}
-//
-//// For returning a command reply whether it is successful or failed
-//// Note: Internal to lagom-common
-//message CommandReply {
-//    oneof reply {
-//        SuccessReply success_reply = 1;
-//        FailureReply failure_reply = 2;
-//    }
-//}
-//
-//// For returning successful command reply
-//// Note: Internal to lagom-common
-//message SuccessReply {
-//    StateWrapper state_wrapper = 1;
-//    bool persistence = 2;
-//}
-//
-//// For returning failed command reply
-//// Note: Internal to lagom-common
-//message FailureReply {
-//    string reason = 1;
-//    FailureCause cause = 2;
-//}
