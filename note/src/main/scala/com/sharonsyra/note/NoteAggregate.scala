@@ -14,5 +14,4 @@ final class NoteAggregate(
   override def aggregateName: String = "Note"
 
   override def stateCompanion: GeneratedMessageCompanion[Note] = Note
-
 }

@@ -26,6 +26,7 @@ class NoteServiceImpl(
     val entityId: String = UUID.randomUUID().toString
 
     sendCommand[CreateNote, Note](
+      entityId,
       CreateNote()
           .withNoteUuid(entityId)
           .withNoteTitle(req.noteTitle)
