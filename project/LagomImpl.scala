@@ -20,6 +20,7 @@ object LagomImpl extends AutoPlugin {
       lagomScaladslPersistenceJdbc,
       lagomScaladslCluster,
       Compile.lagompb,
+      Compile.lagompbReadSide,
       Runtime.lagompbRuntime,
       Runtime.scalapbCommonProtos
     )
