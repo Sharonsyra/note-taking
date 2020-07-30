@@ -1,6 +1,6 @@
 package com.sharonsyra.note
 
-import lagompb.io.superflat.lagompb.readside.utils.SlickPgRepository
+import io.superflat.lagompb.readside.utils.SlickPgRepository
 import slick.jdbc.PostgresProfile
 import slick.jdbc.PostgresProfile.api._
 
@@ -19,10 +19,9 @@ class NoteJournalMigrationRepository(database: Database)
 
   override def all(): Future[Seq[JournalEntity]] = database.run(query.result)
 
-  override def delete(entityId: String): Future[Option[JournalEntity]] = ???
-
   override def read(entityId: String): Future[Option[JournalEntity]] = ???
 
   override def update(entityId: String, model: JournalEntity): Future[Int] = ???
 
+  override def delete(entityId: String): Future[Option[JournalEntity]] = ???
 }

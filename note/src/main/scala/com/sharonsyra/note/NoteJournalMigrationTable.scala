@@ -1,10 +1,11 @@
 package com.sharonsyra.note
 
-import lagompb.io.superflat.lagompb.readside.utils.SlickBasedTable
+import io.superflat.lagompb.readside.utils.SlickBasedTable
 import slick.jdbc.PostgresProfile.api._
+import slick.lifted.ProvenShape
 
 final case class JournalEntity (
-  ordering: Long,
+  ordering: Option[Long],
   persistenceId: String,
   sequenceNumber: Long,
   deleted: Boolean,
@@ -13,7 +14,7 @@ final case class JournalEntity (
 )
 
 class JournalTable(tag: Tag) extends SlickBasedTable[JournalEntity](tag, None, tableName="new_journal") {
-  override def * =
+  override def * : ProvenShape[JournalEntity] =
     (
     ordering,
     persistenceId,
@@ -23,15 +24,15 @@ class JournalTable(tag: Tag) extends SlickBasedTable[JournalEntity](tag, None, t
     message
     ) <> (JournalEntity.tupled, JournalEntity.unapply)
 
-  val ordering: Rep[Long] = column[Long]("ordering", O.AutoInc)
-  val persistenceId: Rep[String] =
+  def ordering: Rep[Option[Long]] = column[Option[Long]]("ordering", O.AutoInc)
+  def persistenceId: Rep[String] =
     column[String]("persistence_id", O.Length(255, varying = true))
-  val sequenceNumber: Rep[Long] = column[Long]("sequence_number")
-  val deleted: Rep[Boolean] = column[Boolean]("deleted", O.Default(false))
-  val tags: Rep[Option[String]] =
+  def sequenceNumber: Rep[Long] = column[Long]("sequence_number")
+  def deleted: Rep[Boolean] = column[Boolean]("deleted", O.Default(false))
+  def tags: Rep[Option[String]] =
     column[Option[String]]("tags", O.Length(255, varying = true))
-  val message: Rep[Array[Byte]] = column[Array[Byte]]("message")
-  val pk = primaryKey(s"${tableName}_pk", (persistenceId, sequenceNumber))
-  val orderingIdx = index(s"${tableName}_ordering_idx", ordering, unique = true)
+  def message: Rep[Array[Byte]] = column[Array[Byte]]("message")
+  def pk = primaryKey(s"${tableName}_pk", (persistenceId, sequenceNumber))
+  def orderingIdx = index(s"${tableName}_ordering_idx", ordering, unique = true)
 
 }
