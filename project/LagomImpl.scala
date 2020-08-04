@@ -14,12 +14,12 @@ object LagomImpl extends AutoPlugin {
     dockerBaseImage := "openjdk:11",
     libraryDependencies ++= Seq(
       lagomScaladslApi,
-      lagomScaladslKafkaBroker,
       lagomScaladslTestKit,
       lagomScaladslAkkaDiscovery,
       lagomScaladslPersistenceJdbc,
       lagomScaladslCluster,
       Compile.lagompb,
+      Compile.lagompbReadSide,
       Runtime.lagompbRuntime,
       Runtime.scalapbCommonProtos
     )

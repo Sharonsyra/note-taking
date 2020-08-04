@@ -38,8 +38,13 @@ services:
       EVENTS_BATCH_THRESHOLD: 2
       NUM_SNAPSHOTS_TO_RETAIN: 2
       PROTO_PACKAGE: "com.sharonsyra.protobuf.note"
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Passmefast
-      POSTGRES_DB_NAME: postgres
+      PERSISTENCE_DB_HOST: postgres
+      PERSISTENCE_DB_PORT: 5432
+      PERSISTENCE_DB_USER: postgres
+      PERSISTENCE_DB_PASSWORD: Passmefast
+      PERSISTENCE_DB_NAME: postgres
+      READ_SIDE_OFFSET_DB_HOST: postgres
+      READ_SIDE_OFFSET_DB_PORT: 5432
+      READ_SIDE_OFFSET_DB_USER: postgres
+      READ_SIDE_OFFSET_DB_PASSWORD: Passmefast
+      READ_SIDE_OFFSET_DB_NAME: postgres
