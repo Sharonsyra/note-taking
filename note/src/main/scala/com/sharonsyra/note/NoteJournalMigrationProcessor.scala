@@ -5,11 +5,13 @@ import akka.actor.ActorSystem
 import akka.actor.typed.scaladsl.adapter._
 import com.sharonsyra.protobuf.note.common.Note
 import io.superflat.lagompb.GlobalException
-import io.superflat.lagompb.encryption.ProtoEncryption
+import io.superflat.lagompb.encryption.{NoEncryption, ProtoEncryption}
+import io.superflat.lagompb.protobuf.encryption.EncryptedProto
 import io.superflat.lagompb.readside.{ReadSideEvent, ReadSideProcessor}
 import scalapb.{GeneratedMessage, GeneratedMessageCompanion}
 import slick.dbio.{DBIO, DBIOAction}
 import slick.jdbc.PostgresProfile.api._
+import com.google.protobuf.any.Any
 
 import scala.concurrent.ExecutionContext
 
@@ -26,7 +28,7 @@ class NoteJournalMigrationProcessor(
   repository: NoteJournalMigrationRepository
 )(
   implicit ec: ExecutionContext
-) extends ReadSideProcessor[Note](encryption)(ec, actorSystem.toTyped) {
+) extends ReadSideProcessor[Note](encryption)(ec, actorSystem.toTyped) with ProtoEncryption {
 
   val journalTable: TableQuery[JournalTable] = TableQuery[JournalTable]
 
@@ -43,7 +45,7 @@ class NoteJournalMigrationProcessor(
               sequenceNumber = readSideEvent.metaData.revisionNumber,
               deleted = false,
               tags = Some(readSideEvent.eventTag),
-              message = readSideEvent.event.toByteArray
+              message = encrypt(Any.pack(readSideEvent.event)).get.toByteArray
             )
           ).map(_ => Done)
 
@@ -54,9 +56,13 @@ class NoteJournalMigrationProcessor(
   }
 
 
+  override def encrypt(proto: Any) = {
+    NoEncryption.encrypt(proto)
+  }
 
-
-
+  override def decrypt(encryptedProto: EncryptedProto) = {
+    NoEncryption.decrypt(encryptedProto)
+  }
 
   private def persistenceId(entityName: String, entityId: String): String =
     s"$entityName|$entityId"
