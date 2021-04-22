@@ -30,6 +30,7 @@ lazy val `note-taking-service` = (project in file("."))
 
 lazy val `note-common` = (project in file("note-common"))
   .enablePlugins(ProtoRuntime)
+  .enablePlugins(AkkaGrpcPlugin)
   .settings(
     name := "note-common",
     PB.protoSources in Compile := Seq(file("note-common/src/main/protobuf")),

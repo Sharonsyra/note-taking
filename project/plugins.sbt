@@ -6,3 +6,5 @@ addSbtPlugin("com.thesamet" % "sbt-protoc" % "0.99.34")
 libraryDependencies += "com.thesamet.scalapb" %% "compilerplugin" % "0.10.7"
 
 addSbtPlugin("com.tapad" % "sbt-docker-compose" % "1.0.35")
+
+addSbtPlugin("com.lightbend.akka.grpc" % "sbt-akka-grpc" % "1.0.1")

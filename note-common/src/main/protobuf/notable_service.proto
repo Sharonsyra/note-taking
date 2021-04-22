@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package com.sharonsyra.protobuf.note;
+
+import "commands.proto";
+import "common.proto";
+
+service NotableService {
+    rpc CreateAccount(CreateNote) returns (Note) {}
+    rpc GetAccount(GetNote) returns (Note) {}
+//    rpc ChangeNote(ChangeNote) returns (Note) {}
+//    rpc DeleteNote(DeleteNote) returns (Note) {}
+}

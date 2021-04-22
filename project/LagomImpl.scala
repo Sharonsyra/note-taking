@@ -20,8 +20,7 @@ object LagomImpl extends AutoPlugin {
       lagomScaladslCluster,
       Compile.lagompb,
       Compile.lagompbReadSide,
-      Runtime.lagompbRuntime,
-      Runtime.scalapbCommonProtos
+      Runtime.lagompbRuntime
     )
   )
 }
